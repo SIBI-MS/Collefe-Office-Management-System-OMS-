@@ -1,0 +1,183 @@
+{% extends 'navigation/basic.html' %}
+
+{% block title %}User Details{% endblock %}
+{% block head %}
+<style>
+    .btn {
+        background-color: #0077c0;
+        color: white;
+        border: none;
+        margin-right: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 150px;
+    }
+
+    .btn:hover {
+        background-color: #0077c0;
+        color: white;
+    }
+
+    /* CSS for the date picker container */
+  .date-picker-container {
+    background-color: #0077c0;
+    color: white;
+    padding: 6px 10px; /* Adjust the padding to control the width and height */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Hover effect on the date picker container */
+  .date-picker-container:hover {
+    background-color: #003366;
+    color: white;
+  }
+
+  /* Add these styles for the sticky header and scrollable body */
+  .table-container {
+    max-height: 640px; /* Adjust the maximum height as needed */
+    overflow-y: auto;
+    position: relative;
+    margin-left:  15px;
+    margin-right:15px;
+  }
+
+  .table-container table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table-container thead {
+    background-color: #0077c0;
+
+    ; /* Blue background color for the table header */
+    color: white; /* Text color for the table header */
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  .table-container tbody {
+    background-color: #fff; /* Background color for the table body */
+  }
+  .table-container thead th:first-child {
+    border-top-left-radius: 10px; /* Rounded top-left corner */
+  }
+
+  .table-container thead th:last-child {
+    border-top-right-radius: 10px; /* Rounded top-right corner */
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="text-center">
+    <br>
+    <br>
+      <p class="text-center;" style=" font-size:40px">User Details</p>
+    <br>
+</div>
+<div class="row">
+    <div class="col-md-5" style="padding-top: 8px; margin-left: 15px;">
+        <form action="{% url 'search' %}" method="post">
+            {% csrf_token %}
+            <div class="input-group">
+                <input type="number" class="form-control" name="admission_no" id="idInput" placeholder="Admission No">
+                <div class="input-group-append">
+                    <select class="form-control" name="department" id="departmentDropdown">
+                        <option value="">Department</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Mathematics">Mathematics</option>
+                        <option value="Physics">Physics</option>
+                        <option value="Zoology">Zoology</option>
+                        <option value="English">English</option>
+                        <!-- Add more departments as needed -->
+                    </select>
+                </div>
+                <div class="input-group-append">
+                    <select class="form-control" name="level" id="levelDropdown">
+                        <option value="">Level</option>
+                        <option value="UG">UG</option>
+                        <option value="PG">PG</option>
+                        <option value="Integrated PG">Integrated PG</option>
+                        <option value="all">All</option>
+                    </select>
+                </div>
+                <div class="input-group-append">
+                    <button class="btn btn-hover" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div style="padding-top: 8px;">
+        <a href="/editdata" class="btn">Edit Details</a>
+        <a href="/datafs" class="btn">Upload Data</a>
+    </div>
+</div>
+
+<br>
+<DIV class="table-container">
+    <table class="table ">
+        <thead>
+            <tr>
+                <th>Card ID</th>
+                <!-- <th>Admission No</th> -->
+                <th>Name</th>
+                <!-- <th>Date of Birth</th> -->
+                <th>Department</th>
+                <!-- <th>Level</th> -->
+                <!-- <th>Phone</th> -->
+                <!-- <th>Gender</th> -->
+                <th>Email</th>
+                <!-- <th>Adrress</th> -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in users %}
+                <tr>
+                    <td>{{ student.card_id }}</td>
+                    <!-- <td>{{ student.admission_no }}</td> -->
+                    <td>{{ student.name }}</td>
+                    <!-- <td>{{ student.dob }}</td> -->
+                    <td>{{ student.department }}</td>
+                    <!-- <td>{{ student.level }}</td> -->
+                    <!-- <td>{{ student.phone }}</td> -->
+                    <!-- <td>{{ student.sex }}</td> -->
+                    <td>{{ student.email }}</td>
+                    <!-- <td>{{ student.address}}</td> -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</DIV>
+{% endblock %}
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+  // Function to enable/disable fields based on ID input
+  function toggleFields() {
+    const idInput = $("#idInput");
+    const departmentDropdown = $("#departmentDropdown");
+    const levelDropdown = $("#levelDropdown");
+    
+    if (idInput.val() !== "") {
+      departmentDropdown.prop("disabled", true);
+      levelDropdown.prop("disabled", true);
+    } else {
+      departmentDropdown.prop("disabled", false);
+      levelDropdown.prop("disabled", false);
+    }
+  }
+
+  // Initial state: all fields are enabled
+  toggleFields();
+
+  // Enable/disable fields when ID input changes
+  $("#idInput").on("input", toggleFields);
+
+  // Add your AJAX update code here, if needed
+});
+
+</script>
+{% endblock %}

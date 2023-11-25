@@ -1,0 +1,209 @@
+{% extends 'navigation/basic.html' %}
+
+{% block title %}Attendance Records{% endblock %}
+{%block head%}
+
+<style>
+  .btn.btn-hover {
+    background-color: #0077c0;
+    color: white; /* White text color */
+    height:38px;
+    width:130px;
+  }
+
+  /* CSS for the date picker container */
+  .date-picker-container {
+    background-color: #001f3f;
+    color: white;
+    padding: 6px 10px; /* Adjust the padding to control the width and height */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Hover effect on the date picker container */
+  .date-picker-container:hover {
+    background-color: #003366;
+    color: white;
+  }
+
+  /* Add these styles for the sticky header and scrollable body */
+  .table-container {
+    max-height: 600px; /* Adjust the maximum height as needed */
+    overflow-y: auto;
+    position: relative;
+    margin-left:  15px;
+    margin-right:15px;
+  }
+
+  .table-container table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table-container thead {
+    background-color: #0077c0
+
+    ; /* Blue background color for the table header */
+    color: white; /* Text color for the table header */
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+
+  .table-container tbody {
+    background-color: #fff; /* Background color for the table body */
+  }
+  .table-container thead th:first-child {
+    border-top-left-radius: 10px; /* Rounded top-left corner */ZZ
+  }
+
+  .table-container thead th:last-child {
+    border-top-right-radius: 10px; /* Rounded top-right corner */
+  }
+  #oms {
+    position: fixed;
+    left: -2px; /* Adjust the left value as needed */
+    top: 130px; /* Adjust the top value as needed */
+    font-family: 'Canela Deck'; /* Use the 'Canela Deck' font */
+    color: #0077c0; /* Text color for OMS */
+    padding: 10px; /* Adjust the padding as needed */
+    border-radius: 5px;
+    z-index: 2; /* Ensure it appears above other content */
+  }
+
+</style>
+
+
+{% endblock%}
+
+{% block body %}
+<div class="container-fluid text-center">
+  <br>
+  <br>
+  {% comment %} <div class="center">
+    <p class="text-center;" style="font-size:40px">Attendance Records</p>
+  </div> {% endcomment %}
+  <br>
+
+    <div class="text-box">
+      <h1 id="oms"style="font-family: serif;font-size: 80px;"><span class="auto-input" style="font-family: serif;font-size: 80px;"></span></h1>
+    </div>
+    <br>
+  <br>
+  <br>
+  <br>
+  <div class="row">
+    <!-- Merged Button -->
+    <div class="col-md-6" style="padding-top: 8px;">
+      <form action="{% url 'logsrch' %}" method="post">
+        {% csrf_token %}
+        <div class="input-group">
+          <input type="number" class="form-control" name="admission_no" id="idInput" placeholder="Admission No">
+          <div class="input-group-append">
+            <select class="form-control" name="department" id="departmentDropdown">
+              <option value="">Department</option>
+              <option value="Computer Science">Computer Science</option>
+              <option value="Mathematics">Mathematics</option>
+              <option value="Physics">Physics</option>
+              <option value="Zoology">Zoology</option>
+              <option value="English">English</option>
+              <!-- Add more departments as needed -->
+            </select>
+          </div>
+          <div class="input-group-append">
+            <select class="form-control" name="level" id="levelDropdown">
+              <option value="">Level</option>
+              <option value="UG">UG</option>
+              <option value="PG">PG</option>
+              <option value="Integrated PG">Integrated PG</option>
+              <option value="all">All</option>
+            </select>
+          </div>
+          <input type="date" class="form-control" name="datepicker" id="datepicker">
+          <div class="input-group-append">
+            <button class="btn btn-hover" type="submit">Search</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<br>
+
+<!-- Wrap the table with a scrollable container -->
+<div class="table-container">
+  <table class="table" style="width: 100%;"> <!-- Adjust the max-width as needed -->
+    <thead>
+      <tr>
+        <th>Card No</th>
+        {% comment %} <th>Admission No</th> {% endcomment %}
+        <th>Name</th>
+        <th>Department</th>
+        {% comment %} <th>Division</th> {% endcomment %}
+        <th>Date</th>
+        <th>Entry Time</th>
+        <th>Exit Time</th>
+        <th>Total Hours</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="cards" class="cards">
+      <!-- Your table rows go here -->
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script>
+  let typed = new Typed(".auto-input", {
+    strings: ["Office Management System"],
+    typeSpeed: 100,
+    backSpeed: 100,
+    loop: true
+  })
+</script>
+<script>
+$(document).ready(function(){
+    setInterval(function(){
+      $.ajax({
+        url: "{% url 'index1' %}",
+        }).done(function(data) {
+        $('#cards').html(data);
+      });
+    }, 3000);
+  });
+
+  $(document).ready(function () {
+    // Function to enable/disable fields based on ID input
+    function toggleFields() {
+      const idInput = $("#idInput");
+      const departmentDropdown = $("#departmentDropdown");
+      const levelDropdown = $("#levelDropdown");
+      const datepicker = $("#datepicker");
+      
+      if (idInput.val() !== "") {
+        departmentDropdown.prop("disabled", true);
+        levelDropdown.prop("disabled", true);
+        datepicker.prop("disabled", true);
+      } else {
+        departmentDropdown.prop("disabled", false);
+        levelDropdown.prop("disabled", false);
+        datepicker.prop("disabled", false);
+      }
+    }
+  
+    // Initial state: all fields are enabled
+    toggleFields();
+  
+    // Enable/disable fields when ID input changes
+    $("#idInput").on("input", toggleFields);
+  
+    // Add your AJAX update code here, if needed
+  });
+</script>
+{% endblock %}
