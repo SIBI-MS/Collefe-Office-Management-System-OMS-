@@ -1,8 +1,8 @@
-# RFID-Based Attendance Management System for College Principal's Office
+# RFID-Based Attendance Management System for College Principal's Office Using Django, CSS, HTML, Boostrap
 
 Welcome to the RFID-Based Attendance Management System designed specifically for the Principal's Office of our college. This web application, built using Django as the backend framework along with HTML, CSS, and the latest Bootstrap, offers a seamless solution for tracking attendance using RFID-enabled ID cards.
 
-## Key Features
+## 🔑 Key Features
 
 - **Efficient Attendance Tracking**: Utilizing RFID technology, this system enables swift and accurate attendance recording for both students and faculty members as they enter or exit the Principal's Office.
   
@@ -18,7 +18,7 @@ Welcome to the RFID-Based Attendance Management System designed specifically for
 
 - **Customizable and Scalable**: Built on Django, the application is highly customizable and scalable, allowing for future enhancements and integration with other systems as needed.
 
-## Getting Started
+## 🚀 Getting Started
 
 To get started with this project, follow these steps:
 
@@ -28,12 +28,12 @@ To get started with this project, follow these steps:
 4. Run migrations: `python manage.py migrate`
 5. Start the development server: `python manage.py runserver`
 
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit pull requests or open issues for any features or bug fixes.
 
 
-## Acknowledgements
+## 🙏 Acknowledgements
 
 - Special thanks to [Django](https://www.djangoproject.com/) for providing an excellent web framework.
 - Thanks to [Bootstrap](https://getbootstrap.com/) for the responsive design elements.
