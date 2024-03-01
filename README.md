@@ -1,1 +1,2 @@
-# College-Office-Management-System-OMS-
+#RFID-Based Attendance Management System for College Principal's Office Using Django, HTML, CSS, Boostrap
+Welcome to the RFID-Based Attendance Management System designed specifically for the Principal's Office of our college. This web application, built using Django as the backend framework along with HTML, CSS, and the latest Bootstrap, offers a seamless solution for tracking attendance using RFID-enabled ID cards.
