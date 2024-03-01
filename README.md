@@ -42,4 +42,3 @@ Contributions are welcome! Please feel free to submit pull requests or open issu
 
 This project showcases not only technical proficiency but also a keen understanding of practical requirements in educational institutions. It offers a robust solution for automating attendance management processes, improving efficiency, and enhancing overall administrative capabilities. 
 
-Feel free to explore the codebase and documentation to see firsthand how this system can revolutionize attendance management in educational institutions.
